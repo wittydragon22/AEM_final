@@ -1,0 +1,21 @@
+column,source,type,description,cleaning_notes
+id,Chicago Crimes API,numeric,Unique record identifier from the City of Chicago crime dataset,Converted to numeric where possible and retained for ordering and QA
+case_number,Chicago Crimes API,string,Police case number associated with the incident,Trimmed and retained as an identifier
+date,Chicago Crimes API,datetime,Date and time when the incident occurred,Converted to datetime; rows with missing or invalid dates are removed
+primary_type,Chicago Crimes API,string,High-level offense category such as THEFT or BATTERY,Trimmed and converted to uppercase
+description,Chicago Crimes API,string,More detailed offense description,Trimmed and converted to uppercase
+location_description,Chicago Crimes API,string,Type of place where the incident occurred,Trimmed and converted to uppercase; missing values retained
+arrest,Chicago Crimes API,boolean,Whether an arrest was recorded for the incident,Converted from API true/false values to Boolean
+domestic,Chicago Crimes API,boolean,Whether the incident was marked as domestic-related,Converted from API true/false values to Boolean
+beat,Chicago Crimes API,numeric,Police beat associated with the incident,Converted to numeric where possible
+district,Chicago Crimes API,numeric,Police district associated with the incident,Converted to numeric where possible
+ward,Chicago Crimes API,numeric,Chicago ward associated with the incident,Converted to numeric where possible
+community_area,Chicago Crimes API,numeric,Chicago community area code associated with the incident,Converted to numeric where possible; small number of missing values retained
+latitude,Chicago Crimes API,numeric,Latitude coordinate for the incident,Converted to numeric; missing values retained in clean file and removed from map-ready file
+longitude,Chicago Crimes API,numeric,Longitude coordinate for the incident,Converted to numeric; missing values retained in clean file and removed from map-ready file
+hour,Derived,numeric,Hour of day extracted from date using 24-hour time,Created from the cleaned date column
+day_of_week,Derived,string,Name of the weekday extracted from date,Created from the cleaned date column
+month,Derived,numeric,Month number extracted from date,Created from the cleaned date column
+month_name,Derived,string,Month name extracted from date,Created from the cleaned date column
+year,Derived,numeric,Year extracted from date,Created from the cleaned date column; should equal 2024 for this project
+is_weekend,Derived,boolean,Indicator for Saturday or Sunday incidents,Created from day_of_week
