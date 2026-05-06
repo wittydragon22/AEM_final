@@ -16,7 +16,7 @@ How do crime incidents in Chicago vary by time, place, and crime type in 2024, a
 | `chicago_crimes_2024_clean.csv` | Cleaned full-year 2024 Chicago crime dataset. |
 | `crimes_map_ready.csv` | Map-ready crime dataset with rows missing latitude/longitude removed. |
 | `data_dictionary.csv` | Column-level data dictionary for the cleaned dataset. |
-| `crime_heatmap_police_stations.html` | Interactive Folium heatmap with police station markers. |
+| `crime_heatmap_police_stations.html` | Enhanced interactive Folium map with tile controls, community-area choropleth, heatmap, district hotspot circles, sampled incident popups, and police station markers. |
 | `polished_four_person_plan.html` | Team coordination plan, responsibilities, AI-use guidance, and remaining next steps. |
 
 ## Data Sources
@@ -62,7 +62,11 @@ The notebook retrieves the main crime dataset through the Socrata API with pagin
 - Arrest rate by district.
 - Top and bottom community areas by incident count.
 - Folium heatmap using mapped crime incidents.
-- Police station markers.
+- Community-area choropleth using Chicago boundary GeoJSON.
+- District hotspot circle markers sized by incident volume and colored by arrest-rate range.
+- Sampled incident popup markers with date, crime type, district, location, arrest outcome, and case number.
+- Police station marker cluster.
+- Multiple map tile layers and a LayerControl, following the class Folium module.
 - Approximate nearest-station distance for mapped crime incidents.
 
 Station distance is used only as geographic context. It does not measure police response time, staffing, patrol coverage, or causality.
@@ -77,6 +81,15 @@ Station distance is used only as geographic context. It does not measure police 
 - COPA complaint status and category supplement.
 
 COPA is used only as a high-level supplement because most 2024 COPA records have unknown or missing beat information. The notebook avoids strong district-level claims from COPA.
+
+### E. Final Synthesis and Limitations
+
+- Integrated decision-support priority table by police district.
+- Priority score combining incident volume, lower arrest outcome rate, and nearest-station distance context.
+- Final takeaways connecting temporal, spatial, crime-type, and COPA findings.
+- Explicit limitations for missing coordinates, station-distance interpretation, arrest outcome interpretation, COPA beat coverage, and live data updates.
+
+The priority score is a transparent ranking for discussion, not a causal model or a measure of police performance.
 
 ## Environment Setup
 
@@ -128,7 +141,7 @@ Running the notebook creates or refreshes:
 - `data_dictionary.csv`
 - `crime_heatmap_police_stations.html`
 
-The interactive map can be opened directly in a browser:
+The interactive map can be opened directly in a browser. It includes the course-style Folium features used in the notebook: tile layers, layer controls, marker clusters, popups, tooltips, choropleth shading, and heatmap overlays.
 
 ```bash
 open crime_heatmap_police_stations.html
@@ -147,10 +160,8 @@ This project was prepared for AEM 5840 Python Programming. The course permits AI
 
 ## Remaining Next Steps
 
-The current notebook includes the main A-D analysis sections. The strongest remaining improvements are:
+The current notebook includes the main A-E analysis sections. The strongest remaining improvements are:
 
-- Add a final decision-support priority ranking table.
-- Add a concise limitations and future-work section.
 - Write the final project summary manually in the last notebook cell.
 - Prepare presentation slides and recording with all four members speaking.
 - Confirm AI-use citations/comments are included where required by the course instructions.

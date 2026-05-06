@@ -206,19 +206,19 @@
       the old 50,000-row cutoff issue has been fixed. The project now uses full-year 2024 Chicago crime data with
       <code>259,111</code> cleaned records from <code>2024-01-01 00:00:00</code> through
       <code>2024-12-31 23:58:00</code>. The map-ready file has <code>257,531</code> records after removing rows
-      without latitude or longitude. The notebook now includes A, B, C, and D sections and runs end to end.
+      without latitude or longitude. The notebook now includes A, B, C, D, and E sections and runs end to end.
     </section>
 
     <h2>0. What Is Already Done</h2>
     <ul class="status-list">
-      <li><code>aem_final.ipynb</code> has full 2024 API pull, cleaning, temporal analysis, spatial analysis, crime type analysis, COPA supplement, and executed outputs.</li>
+      <li><code>aem_final.ipynb</code> has full 2024 API pull, cleaning, temporal analysis, spatial analysis, crime type analysis, COPA supplement, final synthesis, and executed outputs.</li>
       <li><code>chicago_crimes_2024_clean.csv</code> has 259,111 records and 20 documented columns.</li>
       <li><code>crimes_map_ready.csv</code> has 257,531 mapped records.</li>
       <li><code>data_dictionary.csv</code> has one row for every cleaned-data column.</li>
-      <li><code>crime_heatmap_police_stations.html</code> contains the Folium heatmap and police station markers.</li>
+      <li><code>crime_heatmap_police_stations.html</code> contains the enhanced Folium map: tile controls, community-area choropleth, heatmap, district hotspot circles, sampled incident popups, and police station markers.</li>
       <li>The Conda environment <code>cv_hw</code> has the needed packages: pandas, matplotlib, seaborn, requests, folium, plotly, geopy, nbformat, nbclient, and ipykernel.</li>
       <li>The notebook has been run end to end with zero code-cell errors.</li>
-      <li>The current work still needs final human-written summary, decision-support ranking, slide preparation, speaking practice, and AI-use citation cleanup.</li>
+      <li>The current work still needs final human-written summary, slide preparation, speaking practice, and AI-use citation cleanup.</li>
     </ul>
 
     <h2>1. Final Project Direction</h2>
@@ -230,7 +230,7 @@
       How do crime incidents in Chicago vary by time, place, and crime type in 2024, and which district-time-crime combinations appear to need the most public safety attention?
     </div>
     <p>
-      The final notebook should answer this question by combining four parts: data collection and cleaning, temporal analysis, spatial analysis, and crime type/arrest/COPA supplement analysis. The final product should include a simple priority table that ranks district-time-crime combinations using crime volume, arrest rate, and station-distance context.
+      The final notebook should answer this question by combining five parts: data collection and cleaning, temporal analysis, spatial analysis, crime type/arrest/COPA supplement analysis, and final synthesis. The final product now includes a simple priority table that ranks districts using crime volume, arrest rate, and station-distance context.
     </p>
 
     <section class="notice warning">
@@ -270,9 +270,9 @@
         </tr>
         <tr>
           <td>Community Area Boundaries</td>
-          <td>Optional choropleth or community area context</td>
-          <td><a href="https://data.cityofchicago.org/d/cauq-8yn6">cauq-8yn6</a></td>
-          <td>Optional if we want stronger map visuals. Folium heatmap is enough if time is short.</td>
+          <td>Community-area choropleth and hover context</td>
+          <td><a href="https://data.cityofchicago.org/d/igwz-8jzy">igwz-8jzy</a></td>
+          <td>Used for the enhanced Folium map boundary layer. The choropleth supports visual inspection by community area.</td>
         </tr>
       </tbody>
     </table>
@@ -347,12 +347,15 @@
         <h3>C. Spatial Analysis and Map</h3>
         <p><strong>Suggested owner:</strong> Ryan Shelley, or another teammate assigned to geographic analysis.</p>
         <p><strong>Main responsibility:</strong> explain where crime is concentrated and how arrest rates vary across areas.</p>
-        <p><strong>Current status:</strong> complete in the notebook. The section includes district counts, arrest rate by district, top/bottom community areas, police station markers, a Folium heatmap, and nearest-station distance.</p>
+        <p><strong>Current status:</strong> complete in the notebook. The section includes district counts, arrest rate by district, top/bottom community areas, police station markers, a Folium heatmap, community-area choropleth, sampled incident popups, district hotspot circle markers, and nearest-station distance.</p>
         <ul>
           <li>Crime count by police district.</li>
           <li>Arrest rate by district.</li>
           <li>Top 10 and bottom 10 community areas by crime count.</li>
           <li>Folium heatmap using <code>crimes_map_ready.csv</code>.</li>
+          <li>Community-area choropleth using Chicago boundary GeoJSON.</li>
+          <li>Sampled incident markers with click popups and hover tooltips, following the class Folium pattern.</li>
+          <li>District hotspot circle markers sized by incident volume and colored by arrest-rate range.</li>
           <li>Add police station markers from the Police Stations dataset.</li>
           <li>Estimate distance from each mapped incident to the nearest police station using a transparent geographic approximation.</li>
         </ul>
@@ -360,7 +363,7 @@
         <p><strong>Deliverables:</strong></p>
         <ul>
           <li>2 to 3 charts or maps.</li>
-          <li>One interactive Folium map saved or displayed in the notebook.</li>
+          <li>One interactive Folium map saved or displayed in the notebook with LayerControl, tile controls, clusters, popups, tooltips, and choropleth shading.</li>
           <li>2 clear spatial insights.</li>
         </ul>
         <p><strong>Good insight examples:</strong></p>
@@ -534,13 +537,13 @@
 
     <h2>7. Required Libraries and Course Fit</h2>
     <p>
-      The assignment asks us to use two or more new libraries that were not covered in class. The notebook now uses the core class-style tools plus mapping and interactive libraries. We should explicitly explain why the extra libraries were useful rather than listing them mechanically.
+      The notebook now uses the class-style graphing and Folium mapping tools, plus additional interactive and geographic tools. We should explicitly explain why each library was useful rather than listing them mechanically.
     </p>
     <ul>
-      <li><span class="tag">folium</span> for the interactive heatmap and police station marker map.</li>
+      <li><span class="tag">folium</span> for the class-style interactive map: tile controls, LayerControl, heatmap, choropleth, marker clusters, popups, and tooltips.</li>
       <li><span class="tag">plotly</span> for the interactive crime type and arrest-rate chart.</li>
       <li><span class="tag">geopy / geographic distance logic</span> for nearest police station distance context.</li>
-      <li><span class="tag">optional next step: scikit-learn</span> for transparent standardization of the final priority score, if we want a second clearly new analytical library.</li>
+      <li><span class="tag">requests</span> for Socrata API pagination and boundary GeoJSON retrieval.</li>
     </ul>
     <p>
       The current <code>cv_hw</code> environment has pandas, matplotlib, seaborn, requests, folium, plotly, geopy, nbformat, nbclient, and ipykernel installed.
@@ -665,7 +668,7 @@
     </ul>
 
     <p class="small">
-      Prepared as a project coordination plan for AEM 5840. Current notebook status: A-D sections implemented and run end to end; remaining work is final synthesis, manual summary, presentation, and submission QA.
+      Prepared as a project coordination plan for AEM 5840. Current notebook status: A-E sections implemented and run end to end; remaining work is manual summary, presentation, and submission QA.
     </p>
   </main>
 </body>
