@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AEM 5840 Final Project: Four-Person Work Plan</title>
+  <style>
+    :root {
+      --ink: #1f2933;
+      --muted: #52606d;
+      --line: #d9e2ec;
+      --soft: #f5f7fa;
+      --accent: #b31b1b;
+      --accent-dark: #8f1515;
+      --blue: #0b5cad;
+      --green: #13795b;
+      --gold: #9a6700;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 36px 28px 56px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 34px;
+      line-height: 1.15;
+      color: var(--accent);
+    }
+
+    h2 {
+      margin: 34px 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--line);
+      font-size: 24px;
+    }
+
+    h3 {
+      margin: 22px 0 8px;
+      font-size: 19px;
+      color: var(--accent-dark);
+    }
+
+    p {
+      margin: 8px 0 12px;
+    }
+
+    ul, ol {
+      margin-top: 8px;
+      padding-left: 24px;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    code {
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: #eef2f7;
+      font-family: Menlo, Consolas, monospace;
+      font-size: 0.95em;
+    }
+
+    a {
+      color: var(--blue);
+    }
+
+    .subtitle {
+      margin-bottom: 22px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .notice {
+      margin: 18px 0;
+      padding: 14px 16px;
+      border-left: 5px solid var(--accent);
+      background: #fff5f5;
+    }
+
+    .success {
+      border-left-color: var(--green);
+      background: #effcf6;
+    }
+
+    .warning {
+      border-left-color: var(--gold);
+      background: #fffbea;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #ffffff;
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 22px;
+      font-size: 15px;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: var(--soft);
+      font-weight: 700;
+    }
+
+    .tag {
+      display: inline-block;
+      margin: 2px 4px 2px 0;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #eef2f7;
+      color: #334e68;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .role-a { border-top: 5px solid #b31b1b; }
+    .role-b { border-top: 5px solid #0b5cad; }
+    .role-c { border-top: 5px solid #13795b; }
+    .role-d { border-top: 5px solid #9a6700; }
+
+    .checklist li {
+      margin-bottom: 8px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 820px) {
+      main {
+        padding: 24px 16px 40px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>AEM 5840 Final Project: Four-Person Work Plan</h1>
+    <p class="subtitle">
+      Topic: Analyzing Crime Patterns and Public Safety in Chicago using Python, the City of Chicago Data Portal, and supporting public safety datasets.
+    </p>
+
+    <section class="notice warning">
+      <strong>Important data issue:</strong>
+      the current file <code>chicago_crimes_2024_clean.csv</code> contains exactly 50,000 rows from
+      <code>2024-01-01</code> through <code>2024-03-16 07:59</code>. The full 2024 crime dataset has about
+      259,111 rows. For a stronger project, we should repull the full 2024 dataset using pagination instead of using only the first 50,000 rows.
+    </section>
+
+    <h2>1. Final Project Direction</h2>
+    <p>
+      Our project should be framed as a decision-support analysis, not just a collection of charts. The main research question should be:
+    </p>
+    <div class="notice success">
+      <strong>Research question:</strong>
+      How do crime incidents in Chicago vary by time, place, and crime type in 2024, and which district-time-crime combinations appear to need the most public safety attention?
+    </div>
+    <p>
+      The final notebook should answer this question by combining four parts: data collection and cleaning, temporal analysis, spatial analysis, and crime type/arrest/COPA supplement analysis. The final product should include a simple priority table that ranks district-time-crime combinations using crime volume, arrest rate, and station-distance context.
+    </p>
+
+    <h2>2. Data Sources</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Dataset</th>
+          <th>Purpose</th>
+          <th>Link / Dataset ID</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Crimes - 2001 to Present</td>
+          <td>Main crime incident dataset</td>
+          <td><a href="https://data.cityofchicago.org/d/ijzp-q8t2">ijzp-q8t2</a></td>
+          <td>This should be the primary dataset. Use 2024 records for the final analysis.</td>
+        </tr>
+        <tr>
+          <td>Police Stations</td>
+          <td>Station marker map and station-distance supplement</td>
+          <td><a href="https://data.cityofchicago.org/d/z8bn-74gv">z8bn-74gv</a></td>
+          <td>Contains 23 station/headquarters records with latitude and longitude.</td>
+        </tr>
+        <tr>
+          <td>COPA Cases - Summary</td>
+          <td>Accountability supplement</td>
+          <td><a href="https://data.cityofchicago.org/d/mft5-nfa8">mft5-nfa8</a></td>
+          <td>Use only as a small supplement. Many 2024 records have unknown beat, so avoid strong district-level claims.</td>
+        </tr>
+        <tr>
+          <td>Community Area Boundaries</td>
+          <td>Optional choropleth or community area context</td>
+          <td><a href="https://data.cityofchicago.org/d/cauq-8yn6">cauq-8yn6</a></td>
+          <td>Optional if we want stronger map visuals. Folium heatmap is enough if time is short.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3. Team Responsibilities</h2>
+    <div class="grid">
+      <section class="card role-a">
+        <h3>A. Data Foundation and Notebook Integration</h3>
+        <p><strong>Suggested owner:</strong> Chenghao Liu / Harry, or whoever is already handling the current notebook front half.</p>
+        <p><strong>Main responsibility:</strong> make sure the dataset is correct, clean, documented, and ready for everyone else.</p>
+        <ul>
+          <li>Repull full 2024 crime data from Socrata using pagination, not only <code>$limit=50000</code>.</li>
+          <li>Recommended columns: <code>id</code>, <code>case_number</code>, <code>date</code>, <code>primary_type</code>, <code>description</code>, <code>location_description</code>, <code>arrest</code>, <code>domestic</code>, <code>beat</code>, <code>district</code>, <code>ward</code>, <code>community_area</code>, <code>latitude</code>, <code>longitude</code>.</li>
+          <li>Create time variables: <code>hour</code>, <code>day_of_week</code>, <code>month</code>, <code>month_name</code>, <code>year</code>, <code>is_weekend</code>.</li>
+          <li>Convert columns to correct types: dates to datetime, coordinates to numeric, booleans to True/False.</li>
+          <li>Export <code>chicago_crimes_2024_clean.csv</code> and <code>crimes_map_ready.csv</code>.</li>
+          <li>Write the notebook sections for data source, API method, cleaning steps, missing values, and data dictionary.</li>
+          <li>Merge everyone else's final cells into one clean notebook with consistent chart style and explanations.</li>
+        </ul>
+        <p><strong>Deliverables:</strong></p>
+        <ul>
+          <li>Clean CSV file.</li>
+          <li>Map-ready CSV file with missing latitude/longitude removed.</li>
+          <li>Data dictionary table.</li>
+          <li>Notebook introduction and cleaning section.</li>
+        </ul>
+      </section>
+
+      <section class="card role-b">
+        <h3>B. Temporal Analysis</h3>
+        <p><strong>Suggested owner:</strong> Xinyue Pan, or another teammate assigned to time patterns.</p>
+        <p><strong>Main responsibility:</strong> explain when crime is more common and whether arrest rates vary by time.</p>
+        <ul>
+          <li>Crime count by hour.</li>
+          <li>Crime count by day of week.</li>
+          <li>Crime count by month.</li>
+          <li>Hour by day-of-week heatmap.</li>
+          <li>Top 5 crime types by hour or month.</li>
+          <li>Arrest rate by hour, day of week, or month.</li>
+        </ul>
+        <p><strong>Important improvement:</strong> if using full 2024, month analysis becomes meaningful. If using the current 50,000-row file, do not claim March is lower because March is only partial.</p>
+        <p><strong>Deliverables:</strong></p>
+        <ul>
+          <li>3 to 4 polished charts.</li>
+          <li>2 clear insights written in plain English.</li>
+          <li>One short limitation note about date coverage and reporting behavior.</li>
+        </ul>
+        <p><strong>Good insight examples:</strong></p>
+        <ul>
+          <li>Which hours have the highest incident volume?</li>
+          <li>Are weekdays or weekends noticeably different?</li>
+          <li>Does arrest rate change by hour or month?</li>
+        </ul>
+      </section>
+
+      <section class="card role-c">
+        <h3>C. Spatial Analysis and Map</h3>
+        <p><strong>Suggested owner:</strong> Ryan Shelley, or another teammate assigned to geographic analysis.</p>
+        <p><strong>Main responsibility:</strong> explain where crime is concentrated and how arrest rates vary across areas.</p>
+        <ul>
+          <li>Crime count by police district.</li>
+          <li>Arrest rate by district.</li>
+          <li>Top 10 and bottom 10 community areas by crime count.</li>
+          <li>Folium heatmap using <code>crimes_map_ready.csv</code>.</li>
+          <li>Add police station markers from the Police Stations dataset.</li>
+          <li>If time allows, estimate distance from each incident to the nearest police station.</li>
+        </ul>
+        <p><strong>Important caution:</strong> station distance is only an approximation. It does not prove actual police coverage, response time, staffing, or patrol activity.</p>
+        <p><strong>Deliverables:</strong></p>
+        <ul>
+          <li>2 to 3 charts or maps.</li>
+          <li>One interactive Folium map saved or displayed in the notebook.</li>
+          <li>2 clear spatial insights.</li>
+        </ul>
+        <p><strong>Good insight examples:</strong></p>
+        <ul>
+          <li>Which districts have the highest crime volume?</li>
+          <li>Which districts combine high incident counts with lower arrest rates?</li>
+          <li>Do hotspots appear near downtown, transit, retail, or specific community areas?</li>
+        </ul>
+      </section>
+
+      <section class="card role-d">
+        <h3>D. Crime Type, Arrest Outcome, and COPA Supplement</h3>
+        <p><strong>Suggested owner:</strong> Yonglin Zhang, or another teammate assigned to offense and outcome analysis.</p>
+        <p><strong>Main responsibility:</strong> explain what kinds of crimes are most common and how arrest outcomes differ by type, domestic status, and location.</p>
+        <ul>
+          <li>Top 15 primary crime types.</li>
+          <li>Arrest rate by primary crime type.</li>
+          <li>Domestic vs non-domestic incident count and arrest rate.</li>
+          <li>Top location descriptions.</li>
+          <li>One Plotly interactive chart, such as crime type count by district or arrest rate by crime type.</li>
+          <li>COPA supplement: complaint category and complaint status for 2024.</li>
+        </ul>
+        <p><strong>Important caution:</strong> do not overclaim COPA district patterns. In 2024 COPA data, most records have unknown beat, so district matching is weak.</p>
+        <p><strong>Deliverables:</strong></p>
+        <ul>
+          <li>3 polished charts, including one interactive Plotly chart.</li>
+          <li>1 to 2 small COPA supplement charts.</li>
+          <li>2 clear insights about crime type and arrest outcome.</li>
+        </ul>
+        <p><strong>Good insight examples:</strong></p>
+        <ul>
+          <li>Which crime types are most frequent?</li>
+          <li>Which crime types have the lowest arrest rates?</li>
+          <li>How different are domestic and non-domestic cases?</li>
+          <li>What kinds of COPA complaint categories appear most often?</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>4. Final Notebook Structure</h2>
+    <ol>
+      <li><strong>Title and team members:</strong> project title, member names, and research question.</li>
+      <li><strong>Data sources:</strong> crime data, police station data, COPA supplement, and API links.</li>
+      <li><strong>API collection:</strong> show how we used Socrata API and pagination.</li>
+      <li><strong>Cleaning:</strong> type conversion, missing values, duplicate checks, date feature engineering.</li>
+      <li><strong>Data dictionary:</strong> explain each important column.</li>
+      <li><strong>Temporal analysis:</strong> B's charts and insights.</li>
+      <li><strong>Spatial analysis:</strong> C's charts, Folium heatmap, station markers.</li>
+      <li><strong>Crime type and arrest analysis:</strong> D's charts and insights.</li>
+      <li><strong>COPA supplement:</strong> short, careful accountability context.</li>
+      <li><strong>Decision-support table:</strong> ranked district-time-crime combinations.</li>
+      <li><strong>Limitations and future work:</strong> reporting delays, approximate locations, station distance limits, COPA missing beat issue.</li>
+      <li><strong>Project summary:</strong> up to 500 words in the last notebook cell. This must be written by the team, not AI-generated.</li>
+    </ol>
+
+    <h2>5. Decision-Support Output</h2>
+    <p>
+      To make the project stronger, add a final ranked table. This can make the project feel like an actual decision-support system.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Example Calculation</th>
+          <th>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Crime volume</td>
+          <td>Count incidents by <code>district</code>, <code>day_of_week</code>, <code>hour</code>, and <code>primary_type</code>.</td>
+          <td>Shows where and when incident concentration is high.</td>
+        </tr>
+        <tr>
+          <td>Arrest rate</td>
+          <td>Mean of <code>arrest</code> for each group.</td>
+          <td>Highlights areas or types where incidents are less often followed by arrest.</td>
+        </tr>
+        <tr>
+          <td>Station distance</td>
+          <td>Average or median nearest-station distance for mapped incidents.</td>
+          <td>Adds geographic context, but should not be treated as response-time evidence.</td>
+        </tr>
+        <tr>
+          <td>Priority score</td>
+          <td>Standardize each component, then combine: high volume + low arrest rate + higher distance.</td>
+          <td>Ranks combinations that may deserve attention or further investigation.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      This table does not need to be mathematically advanced. A transparent formula and careful explanation are better than a complicated method nobody can explain during the presentation.
+    </p>
+
+    <h2>6. Required Libraries and Course Fit</h2>
+    <p>
+      The assignment asks us to use two or more new libraries that were not covered in class. Since class materials already include pandas, requests, matplotlib, seaborn, plotly, and folium, we should consider adding at least two of the following if they run in our environment:
+    </p>
+    <ul>
+      <li><span class="tag">geopy</span> for nearest police station distance.</li>
+      <li><span class="tag">scikit-learn</span> for simple clustering or standardized priority score support.</li>
+      <li><span class="tag">ipywidgets</span> for an optional interactive filter inside the notebook.</li>
+    </ul>
+    <p>
+      If installation is difficult, keep the analysis simple and use libraries already available, but document that limitation.
+    </p>
+
+    <h2>7. Work Standards for Everyone</h2>
+    <ul class="checklist">
+      <li>Every chart must have a title, axis labels, readable category names, and a short interpretation paragraph.</li>
+      <li>Each person should submit code cells plus markdown explanation, not only screenshots or charts.</li>
+      <li>Each person should write at least two insights from their own section.</li>
+      <li>Use consistent naming: <code>df</code> for cleaned crime data, <code>df_map</code> for mapped crime data, <code>stations</code> for police station data, and <code>copa</code> for COPA data.</li>
+      <li>Do not overwrite the shared notebook without telling the group. Work in separate section notebooks or branches if possible, then merge.</li>
+      <li>Do not make strong causal claims. We can say patterns are associated with time, place, and type; we cannot prove causes.</li>
+      <li>Keep the final presentation to 8-10 minutes, with every member speaking.</li>
+    </ul>
+
+    <h2>8. Suggested Timeline</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Stage</th>
+          <th>Owner</th>
+          <th>Target Output</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Data repull and cleaning</td>
+          <td>A</td>
+          <td>Full 2024 clean CSV, map-ready CSV, and data dictionary.</td>
+        </tr>
+        <tr>
+          <td>Individual analysis drafts</td>
+          <td>B, C, D</td>
+          <td>Each person finishes their charts, insights, and short markdown explanation.</td>
+        </tr>
+        <tr>
+          <td>Integration</td>
+          <td>A plus everyone</td>
+          <td>One notebook with consistent headings, clean order, and no broken cells.</td>
+        </tr>
+        <tr>
+          <td>Decision-support table and limitations</td>
+          <td>A with C and D</td>
+          <td>Ranked priority table and careful limitations section.</td>
+        </tr>
+        <tr>
+          <td>Slides and recording</td>
+          <td>Everyone</td>
+          <td>8-10 minute presentation, all members participate.</td>
+        </tr>
+        <tr>
+          <td>Final review</td>
+          <td>Everyone</td>
+          <td>Run all notebook cells from top to bottom, check files, check citations, and submit.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>9. Presentation Plan</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Speaker</th>
+          <th>Time</th>
+          <th>Content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>A</td>
+          <td>1.5-2 minutes</td>
+          <td>Research question, data sources, API collection, cleaning, and dataset size.</td>
+        </tr>
+        <tr>
+          <td>B</td>
+          <td>1.5-2 minutes</td>
+          <td>Temporal patterns and arrest-rate-over-time findings.</td>
+        </tr>
+        <tr>
+          <td>C</td>
+          <td>1.5-2 minutes</td>
+          <td>Spatial patterns, Folium map, station markers, and district findings.</td>
+        </tr>
+        <tr>
+          <td>D</td>
+          <td>1.5-2 minutes</td>
+          <td>Crime type, arrest outcome, domestic comparison, Plotly chart, and COPA supplement.</td>
+        </tr>
+        <tr>
+          <td>Any member</td>
+          <td>1 minute</td>
+          <td>Decision-support priority table, limitations, and conclusion.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>10. AI Policy Reminder</h2>
+    <section class="notice warning">
+      <p>
+        The project instructions say the final project summary should not be drafted or written by AI. The group can use AI for project work and code help only within the allowed policy, and AI-assisted code must be properly cited in the notebook.
+      </p>
+      <p>
+        This HTML file should be used as planning guidance. The final notebook summary and final interpretation should be written by the team in your own words.
+      </p>
+    </section>
+
+    <p class="small">
+      Prepared as a project coordination plan for AEM 5840. Update owner names and deadlines as soon as the group confirms assignments.
+    </p>
+  </main>
+</body>
+</html>
