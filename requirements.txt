@@ -5,6 +5,7 @@ seaborn
 numpy
 folium
 plotly
+scipy
 geopy
 holidays
 wordcloud
