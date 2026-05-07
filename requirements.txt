@@ -5,6 +5,9 @@ seaborn
 numpy
 folium
 plotly
+geopy
+holidays
+wordcloud
 jupyter
 notebook
 ipykernel

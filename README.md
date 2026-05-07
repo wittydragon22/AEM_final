@@ -17,6 +17,8 @@ How do crime incidents in Chicago vary by time, place, and crime type in 2024, a
 | `crimes_map_ready.csv` | Map-ready crime dataset with rows missing latitude/longitude removed. |
 | `data_dictionary.csv` | Column-level data dictionary for the cleaned dataset. |
 | `crime_heatmap_police_stations.html` | Enhanced interactive Folium map with tile controls, community-area choropleth, heatmap, district hotspot circles, sampled incident popups, and police station markers. |
+| `crime_type_treemap.html` | Plotly treemap showing arrest vs no-arrest composition for the top crime types. |
+| `top5_district_actions.csv` | Top-five decision-support action table by priority district. |
 | `polished_four_person_plan.html` | Team coordination plan, responsibilities, AI-use guidance, and remaining next steps. |
 
 ## Data Sources
@@ -55,6 +57,8 @@ The notebook retrieves the main crime dataset through the Socrata API with pagin
 - Top crime types over time.
 - Arrest rate over time.
 - Normalized weekday and monthly comparisons where calendar length matters.
+- B-2 holiday effect analysis using the `holidays` library to compare federal holidays with non-holidays.
+- Daily time-series chart with a 7-day rolling mean for presentation-ready trend smoothing.
 
 ### C. Spatial Analysis and Map
 
@@ -68,6 +72,7 @@ The notebook retrieves the main crime dataset through the Socrata API with pagin
 - Police station marker cluster.
 - Multiple map tile layers and a LayerControl, following the class Folium module.
 - Approximate nearest-station distance for mapped crime incidents.
+- District bubble scatter plot comparing incident volume and arrest rate.
 
 Station distance is used only as geographic context. It does not measure police response time, staffing, patrol coverage, or causality.
 
@@ -78,6 +83,9 @@ Station distance is used only as geographic context. It does not measure police 
 - Domestic vs non-domestic comparison.
 - Top location descriptions.
 - Plotly interactive crime type chart.
+- Seasonal stacked bar chart for top crime types.
+- Word cloud of common crime descriptions.
+- Plotly treemap of crime type by arrest/no-arrest outcome, exported to HTML.
 - COPA complaint status and category supplement.
 
 COPA is used only as a high-level supplement because most 2024 COPA records have unknown or missing beat information. The notebook avoids strong district-level claims from COPA.
@@ -87,6 +95,7 @@ COPA is used only as a high-level supplement because most 2024 COPA records have
 - Integrated decision-support priority table by police district.
 - Priority score combining incident volume, lower arrest outcome rate, and nearest-station distance context.
 - Final takeaways connecting temporal, spatial, crime-type, and COPA findings.
+- Top-five district action recommendation table exported to CSV.
 - Explicit limitations for missing coordinates, station-distance interpretation, arrest outcome interpretation, COPA beat coverage, and live data updates.
 
 The priority score is a transparent ranking for discussion, not a causal model or a measure of police performance.
@@ -103,6 +112,7 @@ Required Python packages include:
 
 ```bash
 conda install -n cv_hw -y pandas matplotlib seaborn requests folium plotly geopy nbformat nbclient ipykernel
+conda run -n cv_hw pip install holidays wordcloud
 ```
 
 The notebook has been executed end to end in this environment with zero code-cell errors.
@@ -130,16 +140,18 @@ jupyter notebook aem_final.ipynb
 
 If Jupyter is not installed in the active environment, install it or run the notebook from an IDE that supports the `cv_hw` kernel.
 
-The notebook downloads data from the City of Chicago API, so an internet connection is required if rerunning the data-collection cells.
+The notebook includes the City of Chicago API collection functions. The default polishing setting uses the existing cleaned CSVs so the submitted data files are not accidentally regenerated; set `RUN_LIVE_API_PULL = True` in the imports/constants cell only when intentionally refreshing the source data.
 
 ## Generated Outputs
 
-Running the notebook creates or refreshes:
+Running the notebook uses the submitted clean CSVs by default and creates or refreshes:
 
 - `chicago_crimes_2024_clean.csv`
 - `crimes_map_ready.csv`
 - `data_dictionary.csv`
 - `crime_heatmap_police_stations.html`
+- `crime_type_treemap.html`
+- `top5_district_actions.csv`
 
 The interactive map can be opened directly in a browser. It includes the course-style Folium features used in the notebook: tile layers, layer controls, marker clusters, popups, tooltips, choropleth shading, and heatmap overlays.
 
@@ -157,11 +169,3 @@ open crime_heatmap_police_stations.html
 ## Course and AI-Use Note
 
 This project was prepared for AEM 5840 Python Programming. The course permits AI-assisted code work, but the team is responsible for understanding, modifying, and rewriting code as needed. Final written interpretation and the final project summary should be written by the team in their own words, following the course AI-use policy.
-
-## Remaining Next Steps
-
-The current notebook includes the main A-E analysis sections. The strongest remaining improvements are:
-
-- Write the final project summary manually in the last notebook cell.
-- Prepare presentation slides and recording with all four members speaking.
-- Confirm AI-use citations/comments are included where required by the course instructions.

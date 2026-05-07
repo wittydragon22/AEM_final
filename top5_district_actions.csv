@@ -1,0 +1,6 @@
+district,incidents,peak_hour,top_crime_type,avg_nearest_station_miles,arrest_rate_pct,priority_score
+8,17276,0,THEFT,1.73,12.7,84.8
+4,13724,0,BATTERY,1.98,10.0,83.8
+12,16203,0,THEFT,1.1,8.7,81.4
+19,14124,0,THEFT,0.94,9.4,69.2
+6,14870,0,BATTERY,1.15,12.5,67.8
